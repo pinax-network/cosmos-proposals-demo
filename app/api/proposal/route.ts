@@ -24,6 +24,10 @@ const PROPOSAL_QUERY = gql`
       messages {
         type
       }
+      deposits {
+        amount
+        denom
+      }
       votes {
         voter
         option
@@ -56,6 +60,10 @@ interface ProposalRaw {
   messages: {
     type: string;
   }[];
+  deposits: {
+    amount: string;
+    denom: string;
+  }[];
   votes: Vote[];
 }
 
@@ -73,10 +81,11 @@ export interface Proposal {
     type: string;
   }[];
   votes: Vote[];
+  total_deposit: string;
 }
 
 export interface ProposalResponse {
-  proposal: Proposal;
+  proposal: ProposalRaw;
 }
 
 export async function GET(request: Request) {
@@ -93,6 +102,15 @@ export async function GET(request: Request) {
     const sortedVotes = data.proposal.votes.sort((a, b) => {
       return Number(b.block.timestamp) - Number(a.block.timestamp);
     });
+    const total_deposit = data.proposal.deposits.reduce(
+      (acc: number, deposit: { amount: string; denom: string }) =>
+        acc + Number(deposit.amount),
+      0
+    );
+    const total_deposit_string =
+      data.proposal.deposits.length > 0
+        ? `${total_deposit} ${data.proposal.deposits[0].denom.toUpperCase()}`
+        : "0";
 
     const proposal: Proposal = {
       ...data.proposal,
@@ -104,6 +122,7 @@ export async function GET(request: Request) {
       voting_start_time: data.proposal.voting_start_time
         ? Number(data.proposal.voting_start_time) / 1000
         : undefined,
+      total_deposit: total_deposit_string,
       votes: sortedVotes,
     };
 

@@ -259,8 +259,6 @@ export default function Home() {
                         router.push(`/proposal/${proposal.id}`);
                       }
                     }}
-                    role="button"
-                    tabIndex={0}
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <span className="bg-emerald-100 dark:bg-[#7EE7D0]/20 text-emerald-600 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">

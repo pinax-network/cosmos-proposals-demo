@@ -178,6 +178,10 @@ export default function ProposalPage() {
                       : "N/A"}
                   </p>
                 </div>
+                <div>
+                  <p className="text-gray-400">Total Deposit</p>
+                  <p>{proposal.total_deposit}</p>
+                </div>
               </div>
             </div>
           </TabsContent>
