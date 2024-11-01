@@ -11,7 +11,7 @@ const client = new GraphQLClient(
 // Define the query
 const PROPOSALS_QUERY = gql`
   query GetProposals {
-    proposals(first: 100, orderBy: block__number, orderDirection: desc) {
+    proposals(orderBy: block__number, orderDirection: desc) {
       id
       title
       type
