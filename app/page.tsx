@@ -21,6 +21,7 @@ import {
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 // Move these to types file later
 interface Proposal {
@@ -64,7 +65,7 @@ export default function Home() {
       accessorKey: "type",
       header: "Type",
       cell: ({ row }) => (
-        <span className="bg-[#7EE7D0]/20 text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
+        <span className="bg-emerald-100 text-emerald-600 dark:bg-[#7EE7D0]/20 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
           {row.getValue("type")}
         </span>
       ),
@@ -76,10 +77,10 @@ export default function Home() {
         const status = row.getValue("status") as string;
         const statusColor =
           {
-            Passed: "text-green-400",
-            Rejected: "text-red-400",
-            VotingPeriod: "text-cyan-400",
-          }[status] || "text-gray-400";
+            Passed: "text-green-600 dark:text-green-400",
+            Rejected: "text-red-600 dark:text-red-400",
+            VotingPeriod: "text-cyan-600 dark:text-cyan-400",
+          }[status] || "text-gray-600 dark:text-gray-400";
 
         return (
           <span className={`font-medium ${statusColor}`}>
@@ -174,43 +175,63 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0D1117] via-[#161B22] to-[#0D1117] p-8 space-y-8 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-white dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] p-8 text-gray-900 dark:text-white">
       {/* Proposals Summary */}
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4 text-gray-200">
-          Proposals Summary
-        </h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
+            Proposals Summary
+          </h2>
+          <ThemeToggle />
+        </div>
+
         <div className="grid grid-cols-4 gap-4">
-          <div className="bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-            <p className="text-[#7EE7D0] text-sm">Total</p>
-            <p className="text-2xl font-bold text-white">{summary?.total}</p>
+          <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
+            <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              Total
+            </p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {summary?.total}
+            </p>
           </div>
-          <div className="bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-            <p className="text-[#7EE7D0] text-sm">Voting Period</p>
-            <p className="text-2xl font-bold text-white">
+          <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
+            <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              Voting Period
+            </p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {summary?.votingPeriod}
             </p>
           </div>
-          <div className="bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-            <p className="text-[#7EE7D0] text-sm">Passed</p>
-            <p className="text-2xl font-bold text-white">{summary?.passed}</p>
+          <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
+            <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              Passed
+            </p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {summary?.passed}
+            </p>
           </div>
-          <div className="bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-            <p className="text-[#7EE7D0] text-sm">Rejected</p>
-            <p className="text-2xl font-bold text-white">{summary?.rejected}</p>
+          <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
+            <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              Rejected
+            </p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {summary?.rejected}
+            </p>
           </div>
         </div>
       </div>
 
       {/* Live Proposals */}
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto mt-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
             Live Proposals{" "}
-            <span className="text-[#7EE7D0]">{summary?.votingPeriod}</span>
+            <span className="text-emerald-600 dark:text-[#7EE7D0]">
+              {summary?.votingPeriod}
+            </span>
           </h2>
           <button
-            className="text-[#7EE7D0] hover:text-white transition-colors"
+            className="text-emerald-600 hover:text-emerald-700 dark:text-[#7EE7D0] dark:hover:text-[#7EE7D0]/80 transition-colors"
             type="button"
           >
             Show All Proposals
@@ -225,75 +246,49 @@ export default function Home() {
                 proposal.status === "DepositPeriod"
             );
 
-            const [currentPage, setCurrentPage] = useState(0);
-            const proposalsPerPage = 2;
-            const pageCount = Math.ceil(
-              liveProposals.length / proposalsPerPage
-            );
-
-            const displayedProposals = liveProposals.slice(
-              currentPage * proposalsPerPage,
-              (currentPage + 1) * proposalsPerPage
-            );
-
             return (
-              <>
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  {displayedProposals.map((proposal) => (
-                    <div
-                      key={proposal.id}
-                      className="bg-[#1C2128]/50 p-4 rounded-lg backdrop-blur-sm cursor-pointer hover:bg-[#1C2128]/70 transition-colors"
-                      onClick={() => router.push(`/proposal/${proposal.id}`)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          router.push(`/proposal/${proposal.id}`);
-                        }
-                      }}
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="bg-[#7EE7D0]/20 text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
-                          {proposal.type}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                {liveProposals.map((proposal) => (
+                  <div
+                    key={proposal.id}
+                    className="bg-white dark:bg-[#1C2128]/50 p-4 rounded-lg backdrop-blur-sm cursor-pointer 
+                      hover:bg-gray-50 dark:hover:bg-[#1C2128]/70 transition-colors border border-gray-100 dark:border-[#2D333B]"
+                    onClick={() => router.push(`/proposal/${proposal.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        router.push(`/proposal/${proposal.id}`);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-emerald-100 dark:bg-[#7EE7D0]/20 text-emerald-600 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
+                        {proposal.type}
+                      </span>
+                      <span className="text-emerald-600 dark:text-[#7EE7D0]">
+                        Remaining Time: {proposal.remainingTime}
+                      </span>
+                    </div>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      #{proposal.id}. {proposal.title}
+                    </p>
+                    <div className="mt-2">
+                      <p className="text-sm">
+                        <span className="text-gray-600 dark:text-gray-300">
+                          Voting Period:
+                        </span>{" "}
+                        <span className="text-emerald-600 dark:text-[#7EE7D0]">
+                          {proposal.votingPeriod}
                         </span>
-                        <span className="text-[#7EE7D0]">
-                          Remaining Time: {proposal.remainingTime}
-                        </span>
-                      </div>
-                      <p className="font-medium">
-                        #{proposal.id}. {proposal.title}
                       </p>
-                      <div className="mt-2">
-                        <p className="text-sm">
-                          <span className="text-gray-200">Voting Period:</span>{" "}
-                          <span className="text-[#7EE7D0]">
-                            {proposal.votingPeriod}
-                          </span>
-                        </p>
-                        <div className="w-full h-2 bg-[#1C2128] rounded-full mt-2">
-                          <div className="w-3/4 h-full bg-gradient-to-r from-[#7EE7D0] to-[#FF9B9B] rounded-full" />
-                        </div>
+                      <div className="w-full h-2 bg-gray-100 dark:bg-[#2D333B] rounded-full mt-2">
+                        <div className="w-3/4 h-full bg-gradient-to-r from-emerald-500 to-rose-500 dark:from-[#7EE7D0] dark:to-[#FF9B9B] rounded-full" />
                       </div>
                     </div>
-                  ))}
-                </div>
-                {pageCount > 1 && (
-                  <div className="flex justify-center gap-2">
-                    {Array.from({ length: pageCount }).map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentPage(index)}
-                        className={`px-3 py-1 rounded-md ${
-                          currentPage === index
-                            ? "bg-[#7EE7D0] text-[#1C2128]"
-                            : "bg-[#1C2128]/50 text-[#7EE7D0] hover:bg-[#1C2128]/70"
-                        }`}
-                        type="button"
-                      >
-                        {index + 1}
-                      </button>
-                    ))}
                   </div>
-                )}
-              </>
+                ))}
+              </div>
             );
           })()}
         </div>
@@ -302,7 +297,9 @@ export default function Home() {
       {/* All Proposals */}
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-200">All Proposals</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
+            All Proposals
+          </h2>
           <div className="flex gap-4">
             <Input
               placeholder="Filter proposals..."
@@ -312,18 +309,21 @@ export default function Home() {
               onChange={(event) =>
                 table.getColumn("title")?.setFilterValue(event.target.value)
               }
-              className="px-4 py-2 bg-[#1C2128]/50 border border-[#1C2128] rounded-md text-white placeholder-[#7EE7D0]/50 focus:outline-none focus:border-[#7EE7D0]"
+              className="px-4 py-2 bg-white/50 dark:bg-[#1C2128]/50 border border-gray-200 dark:border-[#1C2128] rounded-md text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-[#7EE7D0]/50 focus:outline-none focus:border-emerald-500 dark:focus:border-[#7EE7D0]"
             />
           </div>
         </div>
 
-        <div className="rounded-md border border-[#1C2128]">
+        <div className="rounded-md border border-gray-200 dark:border-[#1C2128]">
           <Table>
             <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} className="text-[#7EE7D0]">
+              <TableRow className="hover:bg-gray-100 dark:hover:bg-[#2D333B]/50 border-gray-200 dark:border-[#1C2128]">
+                {table.getHeaderGroups().map((headerGroup) =>
+                  headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="text-emerald-600 dark:text-[#7EE7D0]"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -331,9 +331,9 @@ export default function Home() {
                             header.getContext()
                           )}
                     </TableHead>
-                  ))}
-                </TableRow>
-              ))}
+                  ))
+                )}
+              </TableRow>
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
@@ -375,7 +375,7 @@ export default function Home() {
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="border-[#1C2128] bg-[#0D1117] text-[#7EE7D0] hover:bg-[#1C2128]/30 hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="border-gray-200 bg-white text-emerald-600 hover:bg-gray-100 hover:text-emerald-700 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </Button>
@@ -384,7 +384,7 @@ export default function Home() {
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="border-[#1C2128] bg-[#0D1117] text-[#7EE7D0] hover:bg-[#1C2128]/30 hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="border-gray-200 bg-white text-emerald-600 hover:bg-gray-100 hover:text-emerald-700 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </Button>

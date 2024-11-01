@@ -43,7 +43,7 @@ interface Vote {
   };
 }
 
-export interface Proposal {
+interface ProposalRaw {
   id: string;
   title: string;
   summary: string;
@@ -53,6 +53,22 @@ export interface Proposal {
   deposit_end_time: string;
   voting_end_time: string;
   voting_start_time: string;
+  messages: {
+    type: string;
+  }[];
+  votes: Vote[];
+}
+
+export interface Proposal {
+  id: string;
+  title: string;
+  summary: string;
+  type: string;
+  status: string;
+  submit_time: number;
+  deposit_end_time: number;
+  voting_end_time?: number;
+  voting_start_time?: number;
   messages: {
     type: string;
   }[];
@@ -73,7 +89,25 @@ export async function GET(request: Request) {
 
   try {
     const data = await client.request<ProposalResponse>(PROPOSAL_QUERY, { id });
-    return Response.json(data.proposal);
+
+    const sortedVotes = data.proposal.votes.sort((a, b) => {
+      return Number(b.block.timestamp) - Number(a.block.timestamp);
+    });
+
+    const proposal: Proposal = {
+      ...data.proposal,
+      submit_time: Number(data.proposal.submit_time) / 1000,
+      deposit_end_time: Number(data.proposal.deposit_end_time) / 1000,
+      voting_end_time: data.proposal.voting_end_time
+        ? Number(data.proposal.voting_end_time) / 1000
+        : undefined,
+      voting_start_time: data.proposal.voting_start_time
+        ? Number(data.proposal.voting_start_time) / 1000
+        : undefined,
+      votes: sortedVotes,
+    };
+
+    return Response.json(proposal);
   } catch (error) {
     console.error("Error fetching proposal:", error);
     return Response.json(
