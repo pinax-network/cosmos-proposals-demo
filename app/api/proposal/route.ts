@@ -126,7 +126,11 @@ export async function GET(request: Request) {
       votes: sortedVotes,
     };
 
-    return Response.json(proposal);
+    return Response.json(proposal, {
+      headers: {
+        "Cache-Control": "public, max-age=3600, stale-while-revalidate=59",
+      },
+    });
   } catch (error) {
     console.error("Error fetching proposal:", error);
     return Response.json(

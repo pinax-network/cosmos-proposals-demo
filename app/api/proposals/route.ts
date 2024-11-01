@@ -49,7 +49,11 @@ export async function GET() {
   try {
     const data = await client.request<ProposalsResponse>(PROPOSALS_QUERY);
 
-    return Response.json(data);
+    return Response.json(data, {
+      headers: {
+        "Cache-Control": "public, max-age=3600, stale-while-revalidate=59",
+      },
+    });
   } catch (error) {
     console.error("Error fetching proposals:", error);
     return Response.json(
