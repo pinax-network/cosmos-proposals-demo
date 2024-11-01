@@ -246,7 +246,7 @@ export default function Home() {
                       onClick={() => router.push(`/proposal/${proposal.id}`)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.key === " ") {
-                          router.push(`/proposals/${proposal.id}`);
+                          router.push(`/proposal/${proposal.id}`);
                         }
                       }}
                     >
@@ -342,7 +342,7 @@ export default function Home() {
                     key={row.id}
                     className="border-[#1C2128] hover:bg-[#1C2128]/30 cursor-pointer"
                     onClick={() =>
-                      router.push(`/proposals/${row.getValue("id")}`)
+                      router.push(`/proposal/${row.getValue("id")}`)
                     }
                   >
                     {row.getVisibleCells().map((cell) => (
