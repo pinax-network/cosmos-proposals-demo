@@ -243,7 +243,7 @@ export default function Home() {
                     <div
                       key={proposal.id}
                       className="bg-[#1C2128]/50 p-4 rounded-lg backdrop-blur-sm cursor-pointer hover:bg-[#1C2128]/70 transition-colors"
-                      onClick={() => router.push(`/proposals/${proposal.id}`)}
+                      onClick={() => router.push(`/proposal/${proposal.id}`)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.key === " ") {
                           router.push(`/proposals/${proposal.id}`);
