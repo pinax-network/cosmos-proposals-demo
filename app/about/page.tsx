@@ -3,7 +3,7 @@ import { Header } from "@/components/Header";
 export default function About() {
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
+      <Header isClient={false} />
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-6 dark:text-white">

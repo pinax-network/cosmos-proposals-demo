@@ -1,7 +1,20 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import Image from "next/image";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export function Header() {
+export function Header({
+  isClient,
+  network,
+}: {
+  isClient: boolean;
+  network?: string;
+}) {
   return (
     <header className="border-b border-gray-200 dark:border-[#1C2128] bg-white/50 dark:bg-[#1C2128]/50 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4 py-3">
@@ -42,20 +55,66 @@ export function Header() {
             </div>
 
             {/* Chain selector */}
-            <div className="relative">
-              <a
-                href="/injective"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-emerald-50 dark:bg-[#7EE7D0]/10 text-emerald-600 dark:text-[#7EE7D0] hover:bg-emerald-100 dark:hover:bg-[#7EE7D0]/20 transition-colors"
+            {isClient && (
+              <Select
+                defaultValue={network || "select-network"}
+                onValueChange={(value) => {
+                  window.location.href = `/${value}`;
+                }}
               >
-                <Image
-                  src="/logos/injective-logo.png"
-                  alt="Injective"
-                  width={20}
-                  height={20}
-                />
-                <span>Injective</span>
-              </a>
-            </div>
+                <SelectTrigger className="w-[180px]">
+                  <div className="flex items-center space-x-2">
+                    <SelectValue placeholder="Select network" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    value="select-network"
+                    disabled={network !== null}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <span>Select Network</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="injective">
+                    <div className="flex items-center space-x-2">
+                      <Image
+                        src="/logos/injective.png"
+                        alt="Injective"
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                      />
+                      <span>Injective</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="cosmos-hub">
+                    <div className="flex items-center space-x-2">
+                      <Image
+                        src="/logos/cosmos-hub.svg"
+                        alt="Cosmos Hub"
+                        width={20}
+                        height={20}
+                        className="rounded-full dark:invert"
+                      />
+                      <span>Cosmos Hub</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="osmosis">
+                    <div className="flex items-center space-x-2">
+                      <Image
+                        src="/logos/osmosis.png"
+                        alt="Osmosis"
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                      />
+                      <span>Osmosis</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           <div className="flex items-center space-x-4">

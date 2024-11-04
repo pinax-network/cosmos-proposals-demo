@@ -114,7 +114,7 @@ export default function ProposalPage() {
           #{proposal.id} {proposal.title}
         </title>
       </Head>
-      <Header />
+      <Header isClient={true} network={params.network as string} />
       <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-white dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] p-8 text-gray-900 dark:text-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-6">
@@ -244,7 +244,7 @@ export default function ProposalPage() {
                   <TableBody>
                     {getPagedVotes().map((vote) => (
                       <TableRow
-                        key={vote.voter}
+                        key={`${vote.voter}-${vote.block.timestamp}`}
                         className="hover:bg-[#2D333B]/50 border-[#2D333B]"
                       >
                         <TableCell className="font-mono">

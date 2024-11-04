@@ -195,7 +195,7 @@ export default function NetworkPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-white dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] text-gray-900 dark:text-white">
-      <Header />
+      <Header isClient={true} network={network as string} />
       <div className="p-8">
         {/* Proposals Summary */}
         <div className="max-w-6xl mx-auto">
