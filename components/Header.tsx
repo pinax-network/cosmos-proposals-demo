@@ -11,7 +11,12 @@ export function Header() {
             <div className="flex flex-col">
               <div className="flex items-center space-x-3">
                 <div>
-                  <span className="text-lg font-medium">Cosmos Proposals</span>
+                  <a
+                    href="/"
+                    className="text-lg font-medium hover:text-emerald-600 dark:hover:text-[#7EE7D0]"
+                  >
+                    Cosmos Proposals
+                  </a>
                   <a
                     href="https://pinax.network"
                     target="_blank"
@@ -38,10 +43,9 @@ export function Header() {
 
             {/* Chain selector */}
             <div className="relative">
-              <button
-                disabled
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-emerald-50 dark:bg-[#7EE7D0]/10 text-emerald-600 dark:text-[#7EE7D0] cursor-not-allowed opacity-80"
-                type="button"
+              <a
+                href="/injective"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-emerald-50 dark:bg-[#7EE7D0]/10 text-emerald-600 dark:text-[#7EE7D0] hover:bg-emerald-100 dark:hover:bg-[#7EE7D0]/20 transition-colors"
               >
                 <Image
                   src="/logos/injective-logo.png"
@@ -50,18 +54,18 @@ export function Header() {
                   height={20}
                 />
                 <span>Injective</span>
-              </button>
+              </a>
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
-            {/* Network status */}
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                Network Online
-              </span>
-            </div>
+            {/* About link */}
+            <a
+              href="/about"
+              className="text-sm text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-[#7EE7D0]"
+            >
+              About
+            </a>
 
             <ThemeToggle />
           </div>
