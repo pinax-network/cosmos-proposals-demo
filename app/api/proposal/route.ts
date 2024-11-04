@@ -1,10 +1,9 @@
 import { gql } from "graphql-request";
+import type { GraphQLClient } from "graphql-request";
 import { getClient, type Network } from "@/app/utils/graphql";
-import { GraphQLClient } from "graphql-request";
 
-// Define the query
 const PROPOSAL_QUERY = gql`
-  query GetProposal($id: ID!) {
+  query GetProposal($id: ID!, $first: Int!, $skip: Int!) {
     proposal(id: $id) {
       id
       title
@@ -22,7 +21,7 @@ const PROPOSAL_QUERY = gql`
         amount
         denom
       }
-      votes(first: 1000) {
+      votes(first: $first, skip: $skip) {
         voter
         option
         block {
@@ -82,6 +81,32 @@ export interface ProposalResponse {
   proposal: ProposalRaw;
 }
 
+async function fetchAllVotes(
+  client: GraphQLClient,
+  id: string
+): Promise<Vote[]> {
+  const BATCH_SIZE = 1000;
+  let allVotes: Vote[] = [];
+  let hasMore = true;
+  let skip = 0;
+
+  while (hasMore) {
+    const data = await client.request<ProposalResponse>(PROPOSAL_QUERY, {
+      id,
+      first: BATCH_SIZE,
+      skip,
+    });
+
+    const batchVotes = data.proposal.votes;
+    allVotes = [...allVotes, ...batchVotes];
+
+    hasMore = batchVotes.length === BATCH_SIZE;
+    skip += BATCH_SIZE;
+  }
+
+  return allVotes;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
@@ -97,9 +122,17 @@ export async function GET(request: Request) {
   const client = getClient(network);
 
   try {
-    const data = await client.request<ProposalResponse>(PROPOSAL_QUERY, { id });
+    // Fetch initial data with first batch of votes
+    const data = await client.request<ProposalResponse>(PROPOSAL_QUERY, {
+      id,
+      first: 1000,
+      skip: 0,
+    });
 
-    const sortedVotes = data.proposal.votes.sort((a, b) => {
+    // Fetch all votes
+    const allVotes = await fetchAllVotes(client, id);
+
+    const sortedVotes = allVotes.sort((a, b) => {
       return Number(b.block.timestamp) - Number(a.block.timestamp);
     });
     const total_deposit =

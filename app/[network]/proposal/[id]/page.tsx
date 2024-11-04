@@ -14,6 +14,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import { Header } from "@/components/Header";
 import { Loading } from "@/components/Loading";
+import Head from "next/head";
 
 function VotingResults({ proposal }: { proposal: Proposal }) {
   // Calculate vote counts
@@ -108,6 +109,11 @@ export default function ProposalPage() {
 
   return (
     <>
+      <Head>
+        <title>
+          #{proposal.id} {proposal.title}
+        </title>
+      </Head>
       <Header />
       <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-white dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] p-8 text-gray-900 dark:text-white">
         <div className="max-w-6xl mx-auto">
