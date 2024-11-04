@@ -24,6 +24,13 @@ import { useParams, useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
 import * as React from "react";
 import { Loading } from "@/components/Loading";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Move these to types file later
 interface Proposal {
@@ -51,6 +58,10 @@ export default function NetworkPage() {
   const [loading, setLoading] = useState(true);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const router = useRouter();
+
+  const uniqueTypes = React.useMemo(() => {
+    return Array.from(new Set(proposals.map((p) => p.type)));
+  }, [proposals]);
 
   const columns: ColumnDef<Proposal>[] = [
     {
@@ -310,6 +321,26 @@ export default function NetworkPage() {
               All Proposals
             </h2>
             <div className="flex gap-4">
+              <Select
+                onValueChange={(value) =>
+                  table
+                    .getColumn("type")
+                    ?.setFilterValue(value === "all" ? "" : value)
+                }
+                defaultValue="all"
+              >
+                <SelectTrigger className="w-[180px] bg-white/50 dark:bg-[#1C2128]/50 border-gray-200 dark:border-[#1C2128]">
+                  <SelectValue placeholder="Select Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Types</SelectItem>
+                  {uniqueTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Input
                 placeholder="Filter proposals..."
                 value={
