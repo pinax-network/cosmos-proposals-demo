@@ -80,7 +80,7 @@ export default function NetworkPage() {
       accessorKey: "type",
       header: "Type",
       cell: ({ row }) => (
-        <span className="bg-emerald-100 text-emerald-600 dark:bg-[#7EE7D0]/20 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
+        <span className="bg-emerald-100 text-emerald-800 dark:bg-[#7EE7D0]/20 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
           {row.getValue("type")}
         </span>
       ),
@@ -108,7 +108,7 @@ export default function NetworkPage() {
       accessorKey: "endTime",
       header: "End Time",
       cell: ({ row }) => (
-        <span className="text-[#7EE7D0]">
+        <span className="dark:text-[#7EE7D0]">
           {new Date(Number(row.getValue("endTime"))).toLocaleString()}
         </span>
       ),
@@ -207,7 +207,7 @@ export default function NetworkPage() {
 
           <div className="grid grid-cols-4 gap-4">
             <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-              <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              <p className="text-emerald-800 dark:text-[#7EE7D0] text-sm">
                 Total
               </p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -215,7 +215,7 @@ export default function NetworkPage() {
               </p>
             </div>
             <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-              <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              <p className="text-emerald-800 dark:text-[#7EE7D0] text-sm">
                 Voting Period
               </p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -223,7 +223,7 @@ export default function NetworkPage() {
               </p>
             </div>
             <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-              <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              <p className="text-emerald-800 dark:text-[#7EE7D0] text-sm">
                 Passed
               </p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -231,7 +231,7 @@ export default function NetworkPage() {
               </p>
             </div>
             <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm">
-              <p className="text-emerald-600 dark:text-[#7EE7D0] text-sm">
+              <p className="text-emerald-800 dark:text-[#7EE7D0] text-sm">
                 Rejected
               </p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -246,12 +246,12 @@ export default function NetworkPage() {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
               Live Proposals{" "}
-              <span className="text-emerald-600 dark:text-[#7EE7D0]">
+              <span className="text-emerald-800 dark:text-[#7EE7D0]">
                 {summary?.votingPeriod}
               </span>
             </h2>
             <button
-              className="text-emerald-600 hover:text-emerald-700 dark:text-[#7EE7D0] dark:hover:text-[#7EE7D0]/80 transition-colors"
+              className="text-emerald-800 hover:text-emerald-900 dark:text-[#7EE7D0] dark:hover:text-[#7EE7D0]/80 transition-colors"
               type="button"
             >
               Show All Proposals
@@ -283,10 +283,10 @@ export default function NetworkPage() {
                       }}
                     >
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="bg-emerald-100 dark:bg-[#7EE7D0]/20 text-emerald-600 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
+                        <span className="bg-emerald-100 dark:bg-[#7EE7D0]/20 text-emerald-800 dark:text-[#7EE7D0] px-2 py-1 rounded-md text-sm">
                           {proposal.type}
                         </span>
-                        <span className="text-emerald-600 dark:text-[#7EE7D0]">
+                        <span className="text-emerald-800 dark:text-[#7EE7D0]">
                           Remaining Time: {proposal.remainingTime}
                         </span>
                       </div>
@@ -298,7 +298,7 @@ export default function NetworkPage() {
                           <span className="text-gray-600 dark:text-gray-300">
                             Voting Period:
                           </span>{" "}
-                          <span className="text-emerald-600 dark:text-[#7EE7D0]">
+                          <span className="text-emerald-800 dark:text-[#7EE7D0]">
                             {proposal.votingPeriod}
                           </span>
                         </p>
@@ -362,7 +362,7 @@ export default function NetworkPage() {
                     headerGroup.headers.map((header) => (
                       <TableHead
                         key={header.id}
-                        className="text-emerald-600 dark:text-[#7EE7D0]"
+                        className="text-emerald-800 dark:text-[#7EE7D0]"
                       >
                         {header.isPlaceholder
                           ? null
@@ -415,7 +415,7 @@ export default function NetworkPage() {
               size="sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="border-gray-200 bg-white text-emerald-600 hover:bg-gray-100 hover:text-emerald-700 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border-gray-200 bg-white text-emerald-800 hover:bg-gray-100 hover:text-emerald-900 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </Button>
@@ -424,7 +424,7 @@ export default function NetworkPage() {
               size="sm"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="border-gray-200 bg-white text-emerald-600 hover:bg-gray-100 hover:text-emerald-700 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border-gray-200 bg-white text-emerald-800 hover:bg-gray-100 hover:text-emerald-900 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </Button>

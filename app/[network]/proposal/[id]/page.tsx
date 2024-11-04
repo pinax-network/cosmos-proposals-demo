@@ -132,7 +132,7 @@ export default function ProposalPage() {
             <TabsList className="grid w-full grid-cols-3 bg-gray-100 dark:bg-[#1C2128]">
               <TabsTrigger
                 value="summary"
-                className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#2D333B] data-[state=active]:text-gray-900 dark:data-[state=active]:text-white"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#2D333B] data-[state=active]:text-emerald-800 dark:data-[state=active]:text-white"
               >
                 Summary
               </TabsTrigger>
@@ -152,7 +152,9 @@ export default function ProposalPage() {
 
             <TabsContent value="summary" className="mt-4">
               <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md">
-                <h2 className="text-[#7EE7D0] text-sm mb-2">Summary</h2>
+                <h2 className="text-emerald-800 dark:text-[#7EE7D0] text-sm mb-2">
+                  Summary
+                </h2>
                 <ReactMarkdown
                   className="prose dark:prose-invert max-w-none"
                   components={{
@@ -168,7 +170,9 @@ export default function ProposalPage() {
 
             <TabsContent value="details" className="mt-4">
               <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md">
-                <h2 className="text-[#7EE7D0] text-sm mb-2">Details</h2>
+                <h2 className="text-emerald-800 dark:text-[#7EE7D0] text-sm mb-2">
+                  Details
+                </h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-gray-400">Type</p>
@@ -214,13 +218,19 @@ export default function ProposalPage() {
 
             <TabsContent value="votes" className="mt-4">
               <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md">
-                <h2 className="text-[#7EE7D0] text-sm mb-4">Votes</h2>
+                <h2 className=" text-emerald-800 dark:text-[#7EE7D0] text-sm mb-4">
+                  Votes
+                </h2>
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-[#2D333B]/50 border-[#2D333B]">
-                      <TableHead className="text-[#7EE7D0]">Voter</TableHead>
-                      <TableHead className="text-[#7EE7D0]">Time</TableHead>
-                      <TableHead className="text-right text-[#7EE7D0]">
+                      <TableHead className="text-emerald-800 dark:text-[#7EE7D0]">
+                        Voter
+                      </TableHead>
+                      <TableHead className="text-emerald-800 dark:text-[#7EE7D0]">
+                        Time
+                      </TableHead>
+                      <TableHead className="text-right  text-emerald-800 dark:text-[#7EE7D0]">
                         Vote
                       </TableHead>
                     </TableRow>

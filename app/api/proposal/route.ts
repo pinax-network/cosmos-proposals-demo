@@ -102,11 +102,12 @@ export async function GET(request: Request) {
     const sortedVotes = data.proposal.votes.sort((a, b) => {
       return Number(b.block.timestamp) - Number(a.block.timestamp);
     });
-    const total_deposit = data.proposal.deposits.reduce(
-      (acc: number, deposit: { amount: string; denom: string }) =>
-        acc + Number(deposit.amount),
-      0
-    );
+    const total_deposit =
+      data.proposal.deposits.reduce(
+        (acc: number, deposit: { amount: string; denom: string }) =>
+          acc + Number(deposit.amount),
+        0
+      ) / 1e18;
     const total_deposit_string =
       data.proposal.deposits.length > 0
         ? `${total_deposit} ${data.proposal.deposits[0].denom.toUpperCase()}`
