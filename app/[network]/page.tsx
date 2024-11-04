@@ -125,6 +125,11 @@ export default function NetworkPage() {
     state: {
       columnFilters,
     },
+    initialState: {
+      pagination: {
+        pageSize: 15,
+      },
+    },
   });
 
   useEffect(() => {
