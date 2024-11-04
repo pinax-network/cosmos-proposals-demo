@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import type { Proposal, ProposalResponse } from "@/app/api/proposal/route";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ThemeToggle } from "@/components/theme-toggle";
 import ReactMarkdown from "react-markdown";
 import { Header } from "@/components/Header";
 
@@ -61,6 +60,7 @@ function VotingResults({ proposal }: { proposal: Proposal }) {
 
 export default function ProposalPage() {
   const params = useParams();
+  const router = useRouter();
   const [proposal, setProposal] = useState<Proposal | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,7 +69,9 @@ export default function ProposalPage() {
   useEffect(() => {
     async function fetchProposal() {
       try {
-        const response = await fetch(`/api/proposal?id=${params.id}`);
+        const response = await fetch(
+          `/api/proposal?id=${params.id}&network=${params.network}`
+        );
         const data: Proposal = await response.json();
         if (data) {
           setProposal(data);
@@ -82,7 +84,7 @@ export default function ProposalPage() {
     }
 
     fetchProposal();
-  }, [params.id]);
+  }, [params.id, params.network]);
 
   const getPagedVotes = () => {
     if (!proposal) return [];
@@ -109,10 +111,18 @@ export default function ProposalPage() {
       <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-white dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] p-8 text-gray-900 dark:text-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-semibold">
-              #{proposal.id} {proposal.title}
-            </h1>
-            <ThemeToggle />
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => router.push(`/${params.network}`)}
+                className="px-3 py-1 rounded-md bg-gray-100 dark:bg-[#2D333B] hover:bg-gray-200 dark:hover:bg-[#373E47] transition-colors"
+                type="button"
+              >
+                ← Back
+              </button>
+              <h1 className="text-2xl font-semibold">
+                #{proposal.id} {proposal.title}
+              </h1>
+            </div>
           </div>
 
           <VotingResults proposal={proposal} />
