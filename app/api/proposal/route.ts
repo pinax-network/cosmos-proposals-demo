@@ -22,7 +22,7 @@ const PROPOSAL_QUERY = gql`
         amount
         denom
       }
-      votes {
+      votes(first: 1000) {
         voter
         option
         block {

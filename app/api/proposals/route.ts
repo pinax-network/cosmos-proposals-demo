@@ -3,7 +3,7 @@ import { getClient, type Network } from "@/app/utils/graphql";
 // Define the query
 const PROPOSALS_QUERY = `
   query GetProposals {
-    proposals(orderBy: block__number, orderDirection: desc) {
+    proposals(first: 1000, orderBy: block__number, orderDirection: desc) {
       id
       title
       type
