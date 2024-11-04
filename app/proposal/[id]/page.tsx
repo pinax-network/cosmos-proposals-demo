@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ThemeToggle } from "@/components/theme-toggle";
+import ReactMarkdown from "react-markdown";
 
 function VotingResults({ proposal }: { proposal: Proposal }) {
   // Calculate vote counts
@@ -138,7 +139,16 @@ export default function ProposalPage() {
           <TabsContent value="summary" className="mt-4">
             <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md">
               <h2 className="text-[#7EE7D0] text-sm mb-2">Summary</h2>
-              <p className="whitespace-pre-line">{proposal.summary}</p>
+              <ReactMarkdown
+                className="prose dark:prose-invert max-w-none"
+                components={{
+                  p: ({ node, ...props }) => (
+                    <p style={{ whiteSpace: "pre-wrap" }} {...props} />
+                  ),
+                }}
+              >
+                {proposal.summary.replace(/\\n/g, "\n")}
+              </ReactMarkdown>
             </div>
           </TabsContent>
 

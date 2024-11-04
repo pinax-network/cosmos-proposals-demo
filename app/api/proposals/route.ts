@@ -9,7 +9,7 @@ const client = new GraphQLClient(
 );
 
 // Define the query
-const PROPOSALS_QUERY = gql`
+const PROPOSALS_QUERY = `
   query GetProposals {
     proposals(orderBy: block__number, orderDirection: desc) {
       id
