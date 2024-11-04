@@ -250,12 +250,6 @@ export default function NetworkPage() {
                 {summary?.votingPeriod}
               </span>
             </h2>
-            <button
-              className="text-emerald-800 hover:text-emerald-900 dark:text-[#7EE7D0] dark:hover:text-[#7EE7D0]/80 transition-colors"
-              type="button"
-            >
-              Show All Proposals
-            </button>
           </div>
 
           <div>
