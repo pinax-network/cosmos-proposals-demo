@@ -77,6 +77,7 @@ export default function ProposalPage() {
         const data: Proposal = await response.json();
         if (data) {
           setProposal(data);
+          document.title = `#${data.id} ${data.title}`;
         }
       } catch (error) {
         console.error("Error fetching proposal:", error);

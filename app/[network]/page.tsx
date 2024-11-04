@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getFormattedNetworkName } from "../utils/stringFormatting";
 
 // Move these to types file later
 interface Proposal {
@@ -133,6 +134,8 @@ export default function NetworkPage() {
   });
 
   useEffect(() => {
+    document.title = `${getFormattedNetworkName(network as string)} Proposals`;
+
     async function fetchProposals() {
       try {
         const response = await fetch(`/api/proposals?network=${network}`);
