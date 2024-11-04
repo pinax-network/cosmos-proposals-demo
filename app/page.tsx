@@ -116,7 +116,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchProposals() {
       try {
-        const response = await fetch("/api/proposals");
+        const response = await fetch("/api/proposals?network=injective");
         const data: ProposalsResponse = await response.json();
 
         if (data.proposals) {

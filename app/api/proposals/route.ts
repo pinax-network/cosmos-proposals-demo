@@ -1,12 +1,4 @@
-import { gql } from "graphql-request";
-import { GraphQLClient } from "graphql-request";
-
-const THE_GRAPH_API_KEY = process.env.THE_GRAPH_API_KEY;
-
-// Initialize the GraphQL client
-const client = new GraphQLClient(
-  `https://gateway.thegraph.com/api/${THE_GRAPH_API_KEY}/subgraphs/id/2aYHh1GtHqHTU782VMxg5Hzpzsc4q4WdxniKW7MAvBBj`
-);
+import { getClient, type Network } from "@/app/utils/graphql";
 
 // Define the query
 const PROPOSALS_QUERY = `
@@ -45,8 +37,17 @@ export interface ProposalsResponse {
   proposals: Proposal[];
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const network = searchParams.get("network") as Network;
+
+    if (!network) {
+      return Response.json({ error: "Network is required" }, { status: 400 });
+    }
+
+    const client = getClient(network);
+
     const data = await client.request<ProposalsResponse>(PROPOSALS_QUERY);
 
     return Response.json(data, {

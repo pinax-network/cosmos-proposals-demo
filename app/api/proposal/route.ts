@@ -1,12 +1,6 @@
 import { gql } from "graphql-request";
+import { getClient, type Network } from "@/app/utils/graphql";
 import { GraphQLClient } from "graphql-request";
-
-const THE_GRAPH_API_KEY = process.env.THE_GRAPH_API_KEY;
-
-// Initialize the GraphQL client
-const client = new GraphQLClient(
-  `https://gateway.thegraph.com/api/${THE_GRAPH_API_KEY}/subgraphs/id/2aYHh1GtHqHTU782VMxg5Hzpzsc4q4WdxniKW7MAvBBj`
-);
 
 // Define the query
 const PROPOSAL_QUERY = gql`
@@ -91,10 +85,16 @@ export interface ProposalResponse {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const network = searchParams.get("network") as Network;
 
   if (!id) {
     return Response.json({ error: "Proposal ID is required" }, { status: 400 });
   }
+  if (!network) {
+    return Response.json({ error: "Network is required" }, { status: 400 });
+  }
+
+  const client = getClient(network);
 
   try {
     const data = await client.request<ProposalResponse>(PROPOSAL_QUERY, { id });
