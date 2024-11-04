@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
 import * as React from "react";
+import { Loading } from "@/components/Loading";
 
 // Move these to types file later
 interface Proposal {
@@ -175,6 +176,10 @@ export default function NetworkPage() {
 
     const days = Math.floor(remaining / (24 * 60 * 60));
     return `${days} Days`;
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (

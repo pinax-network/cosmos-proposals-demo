@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import ReactMarkdown from "react-markdown";
 import { Header } from "@/components/Header";
+import { Loading } from "@/components/Loading";
 
 function VotingResults({ proposal }: { proposal: Proposal }) {
   // Calculate vote counts
@@ -98,7 +99,7 @@ export default function ProposalPage() {
     : 0;
 
   if (loading) {
-    return <div className="p-8 text-black">Loading...</div>;
+    return <Loading />;
   }
 
   if (!proposal) {
