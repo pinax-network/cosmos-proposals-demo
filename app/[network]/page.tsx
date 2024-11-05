@@ -344,7 +344,7 @@ export default function NetworkPage() {
                 </SelectContent>
               </Select>
               <Input
-                placeholder="Filter proposals..."
+                placeholder="Filter by title..."
                 value={
                   (table.getColumn("title")?.getFilterValue() as string) ?? ""
                 }
