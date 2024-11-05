@@ -128,7 +128,7 @@ export default function NetworkPage() {
     },
     initialState: {
       pagination: {
-        pageSize: 15,
+        pageSize: 10,
       },
     },
   });

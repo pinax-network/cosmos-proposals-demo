@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 export function Header({
   isClient,
@@ -15,6 +16,8 @@ export function Header({
   isClient: boolean;
   network?: string;
 }) {
+  const router = useRouter();
+
   return (
     <header className="border-b border-gray-200 dark:border-[#1C2128] bg-white/50 dark:bg-[#1C2128]/50 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4 py-3">
@@ -24,12 +27,13 @@ export function Header({
             <div className="flex flex-col">
               <div className="flex items-center space-x-3">
                 <div>
-                  <a
-                    href="/"
+                  <button
+                    onClick={() => router.push("/")}
                     className="text-lg font-medium hover:text-emerald-600 dark:hover:text-[#7EE7D0]"
+                    type="button"
                   >
                     Cosmos Proposals
-                  </a>
+                  </button>
                   <a
                     href="https://pinax.network"
                     target="_blank"
@@ -59,7 +63,7 @@ export function Header({
               <Select
                 defaultValue={network || "select-network"}
                 onValueChange={(value) => {
-                  window.location.href = `/${value}`;
+                  router.push(`/${value}`);
                 }}
               >
                 <SelectTrigger className="w-[180px]">
@@ -119,12 +123,13 @@ export function Header({
 
           <div className="flex items-center space-x-4">
             {/* About link */}
-            <a
-              href="/about"
+            <button
+              onClick={() => router.push("/about")}
               className="text-sm text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-[#7EE7D0]"
+              type="button"
             >
               About
-            </a>
+            </button>
 
             <ThemeToggle />
           </div>
