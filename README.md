@@ -10,7 +10,7 @@ Through this demo, you can explore how the subgraph can be integrated into web a
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js
 - npm or yarn package manager
 - Git
 
@@ -60,11 +60,4 @@ To create a production build:
 npm run build
 # or
 yarn build
-```
-
-To preview the production build locally:
-```bash
-npm run preview
-# or
-yarn preview
 ```
