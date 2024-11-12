@@ -61,10 +61,3 @@ npm run build
 # or
 yarn build
 ```
-
-To preview the production build locally:
-```bash
-npm run preview
-# or
-yarn preview
-```
