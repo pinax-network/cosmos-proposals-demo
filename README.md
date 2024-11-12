@@ -10,7 +10,7 @@ Through this demo, you can explore how the subgraph can be integrated into web a
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js
 - npm or yarn package manager
 - Git
 
