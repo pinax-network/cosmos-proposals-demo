@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getFormattedNetworkName } from "../utils/stringFormatting";
+import { Switch } from "@/components/ui/switch";
 
 // Move these to types file later
 interface Proposal {
@@ -59,6 +60,7 @@ export default function NetworkPage() {
   const [loading, setLoading] = useState(true);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const router = useRouter();
+  const [showAllProposals, setShowAllProposals] = useState(false);
 
   const uniqueTypes = React.useMemo(() => {
     return Array.from(new Set(proposals.map((p) => p.type)));
@@ -116,8 +118,14 @@ export default function NetworkPage() {
     },
   ];
 
+  const filteredProposals = React.useMemo(() => {
+    return showAllProposals
+      ? proposals
+      : proposals.filter((proposal) => proposal.status !== "Dropped");
+  }, [proposals, showAllProposals]);
+
   const table = useReactTable({
-    data: proposals,
+    data: filteredProposals,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -322,7 +330,8 @@ export default function NetworkPage() {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
               All Proposals
             </h2>
-            <div className="flex gap-4">
+            <div className="flex items-center space-x-4">
+              {/* Filter Controls */}
               <Select
                 onValueChange={(value) =>
                   table
@@ -343,6 +352,7 @@ export default function NetworkPage() {
                   ))}
                 </SelectContent>
               </Select>
+
               <Input
                 placeholder="Filter by title..."
                 value={
@@ -351,8 +361,19 @@ export default function NetworkPage() {
                 onChange={(event) =>
                   table.getColumn("title")?.setFilterValue(event.target.value)
                 }
-                className="px-4 py-2 bg-white/50 dark:bg-[#1C2128]/50 border border-gray-200 dark:border-[#1C2128] rounded-md text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-[#7EE7D0]/50 focus:outline-none focus:border-emerald-500 dark:focus:border-[#7EE7D0]"
+                className="w-[300px] bg-white/50 dark:bg-[#1C2128]/50 border-gray-200 dark:border-[#1C2128]"
               />
+
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 dark:text-gray-300">
+                  Show dropped
+                </span>
+                <Switch
+                  checked={showAllProposals}
+                  onCheckedChange={setShowAllProposals}
+                  className="data-[state=checked]:bg-emerald-500 dark:data-[state=checked]:bg-[#7EE7D0]"
+                />
+              </div>
             </div>
           </div>
 
