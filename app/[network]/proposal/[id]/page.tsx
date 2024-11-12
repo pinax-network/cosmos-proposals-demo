@@ -248,7 +248,15 @@ export default function ProposalPage() {
                         key={`${vote.voter}-${vote.block.timestamp}`}
                         className="hover:bg-[#2D333B]/50 border-[#2D333B]"
                       >
-                        <TableCell className="font-mono">
+                        <TableCell
+                          className="font-mono cursor-pointer hover:text-emerald-500 dark:hover:text-[#7EE7D0]"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(
+                              `/${params.network}/voter/${vote.voter}`
+                            );
+                          }}
+                        >
                           {vote.voter}
                         </TableCell>
                         <TableCell>
