@@ -24,10 +24,10 @@ interface Proposal {
   title: string;
   type: string;
   status: string;
-  submit_time: string;
-  deposit_end_time: string;
-  voting_end_time: string;
-  voting_start_time: string;
+  submit_time: number;
+  deposit_end_time: number;
+  voting_end_time: number;
+  voting_start_time: number;
   messages: {
     type: string;
   }[];
@@ -41,6 +41,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const network = searchParams.get("network") as Network;
+    
 
     if (!network) {
       return Response.json({ error: "Network is required" }, { status: 400 });
@@ -50,9 +51,21 @@ export async function GET(request: Request) {
 
     const data = await client.request<ProposalsResponse>(PROPOSALS_QUERY);
 
-    return Response.json(data, {
-      headers: {
-        "Cache-Control": "public, max-age=3600, stale-while-revalidate=59",
+    const proposals = data.proposals.map((proposal) => ({
+      ...proposal,
+      submit_time: Number(proposal.submit_time) / 1000,
+      deposit_end_time: Number(proposal.deposit_end_time) / 1000,
+      voting_end_time: Number(proposal.voting_end_time) / 1000,
+      voting_start_time: Number(proposal.voting_start_time) / 1000,
+    }));
+
+    console.log(proposals);
+
+    return Response.json(
+      { proposals },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=3600, stale-while-revalidate=59",
       },
     });
   } catch (error) {

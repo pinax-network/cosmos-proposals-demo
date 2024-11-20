@@ -112,7 +112,7 @@ export default function NetworkPage() {
       header: "End Time",
       cell: ({ row }) => (
         <span className="dark:text-[#7EE7D0]">
-          {new Date(Number(row.getValue("endTime"))).toLocaleString()}
+          {row.getValue("endTime")}
         </span>
       ),
     },
@@ -157,16 +157,14 @@ export default function NetworkPage() {
             type: proposal.messages[0].type.split(".").pop() || "",
             status: proposal.status,
             endTime: `${new Date(
-              Number(proposal.voting_end_time) / 1000
+              proposal.voting_end_time
             ).toLocaleString()}`,
             votingPeriod: `${new Date(
-              Number(proposal.voting_start_time) / 1000
+              proposal.voting_start_time
             ).toLocaleString()} - ${new Date(
-              Number(proposal.voting_end_time) / 1000
+              proposal.voting_end_time
             ).toLocaleString()}`,
-            remainingTime: calculateRemainingTime(
-              Number(proposal.voting_end_time) / 1000
-            ),
+            remainingTime: calculateRemainingTime(proposal.voting_end_time),
           }));
 
           setProposals(transformedProposals);
