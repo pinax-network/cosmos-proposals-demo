@@ -208,6 +208,8 @@ export default function NetworkPage() {
   }
 
   return (
+
+    
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-white dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] text-gray-900 dark:text-white">
       <Header isClient={true} network={network as string} />
       <div className="p-8">
@@ -217,6 +219,13 @@ export default function NetworkPage() {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
               Proposals Summary
             </h2>
+            <Button
+              variant="outline"
+              onClick={() => router.push(`/${network}/governance-parameters`)}
+              className="border-gray-200 bg-white text-emerald-800 hover:bg-gray-100 hover:text-emerald-900 dark:border-[#1C2128] dark:bg-[#0D1117] dark:text-[#7EE7D0] dark:hover:bg-[#1C2128]/30 dark:hover:text-[#7EE7D0]"
+            >
+              Governance Parameters
+            </Button>
           </div>
 
           <div className="grid grid-cols-4 gap-4">
