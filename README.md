@@ -6,6 +6,8 @@ The subgraph enables efficient querying and indexing of Cosmos blockchain propos
 
 Through this demo, you can explore how the subgraph can be integrated into web applications to create user-friendly interfaces for viewing and interacting with Cosmos governance data.
 
+Please refer to the [Subgraph's documentation for current limitations around governance parameters tracking](https://github.com/pinax-network/subgraph-cosmos-proposals/blob/main/doc/limitations.md)
+
 ## Setup
 
 ### Prerequisites
