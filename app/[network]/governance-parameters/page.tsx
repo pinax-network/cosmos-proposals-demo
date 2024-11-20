@@ -51,9 +51,20 @@ export default function GovernanceParameters() {
       <Header isClient={true} network={network as string} />
       <div className="p-8">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200 mb-6">
-            Governance Parameters
-          </h2>
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">
+              Governance Parameters
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              In effect since {new Date(Number(mostRecent.block.timestamp)).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })} (Block #{mostRecent.block.number})
+            </p>
+          </div>
 
           {/* Deposit Parameters Section */}
           <div className="mb-8">
@@ -137,30 +148,6 @@ export default function GovernanceParameters() {
                 <p className="text-emerald-800 dark:text-[#7EE7D0] text-sm">Expedited Threshold</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
                   {mostRecent.tally_params.expedited_threshold}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Block Info Section */}
-          <div>
-            <h3 className="text-lg font-semibold text-emerald-800 dark:text-[#7EE7D0] mb-4">
-              Block Info
-            </h3>
-            <div className="grid grid-cols-1 gap-4">
-              <div className="bg-white/50 dark:bg-[#1C2128]/50 p-4 rounded-md backdrop-blur-sm border border-gray-100 dark:border-[#2D333B] hover:bg-gray-50 dark:hover:bg-[#1C2128]/70 transition-colors">
-                <p className="text-emerald-800 dark:text-[#7EE7D0] text-sm">In effect since</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {new Date(Number(mostRecent.block.timestamp)).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })}
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Block #{mostRecent.block.number}
                 </p>
               </div>
             </div>
